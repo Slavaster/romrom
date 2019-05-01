@@ -15,7 +15,7 @@ public class RomromApplication {
 
     @RequestMapping("/greeting")
     public String greeting(){
-        return "Hi!";
+        return "Hello, mazafaka!";
     }
 
 }
