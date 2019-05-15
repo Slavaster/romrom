@@ -1,25 +1,40 @@
 package com.homelab.romrominitializr;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String login;
     private String password;
     private Date registrationDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "owner", referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name="user_info")
     private UserInformation userInformation;
+
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="users_skills", joinColumns={@JoinColumn(referencedColumnName="id")}
+            , inverseJoinColumns={@JoinColumn(referencedColumnName="id")})
+    private Set<Skill> skills = new HashSet<>();
+
+    public User() {
+        super();
+    }
+
+    public User(String login, String password, Date registrationDate) {
+        this.login = login;
+        this.password = password;
+        this.registrationDate = registrationDate;
+    }
 
     public UserInformation getUserInformation() {
         return userInformation;
@@ -28,16 +43,17 @@ public class User {
     public void setUserInformation(UserInformation userInformation) {
         this.userInformation = userInformation;
     }
-
-    @OneToMany(mappedBy = "owner")
-    private List<Skill> skills;
-
-    public List<Skill> getSkills() {
+    public Set<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<Skill> skills) {
-        this.skills = skills;
+    public void setSkill(Skill newSkill) {
+        skills.add(newSkill);
+        newSkill.addOwner(this);
+    }
+
+    public void setSkills(List<Skill> newSkills){
+        skills.addAll(newSkills.stream().peek(skill -> skill.addOwner(this)).collect(Collectors.toSet()));
     }
 
     public Integer getId() {

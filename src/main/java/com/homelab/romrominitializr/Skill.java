@@ -1,30 +1,42 @@
 package com.homelab.romrominitializr;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "Skills")
+@Table(name = "skills", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "id")})
 public class Skill {
 
     @Id
     @GeneratedValue
-    @Column(nullable=false)
+    @Column(name="id")
     private int id;
+    @ManyToMany
+    private Set<User> owners = new HashSet<>();
 
     private String name;
     @Enumerated(EnumType.STRING)
     private SkillLevel skillLevel;
 
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name="Owner")
-    private User owner;
-
-    public User getUser() {
-        return owner;
+    @ManyToMany(mappedBy = "skills")
+    public Set<User> getOwners() {
+        return owners;
     }
 
-    public void setUser(User user) {
-        this.owner = user;
+    public void addOwner(User newOwner){
+        owners.add(newOwner);
+        if(!newOwner.getSkills().contains(this)) newOwner.setSkill(this);
+    }
+
+    public Skill() {
+        super();
+    }
+
+    public Skill(String name, SkillLevel skillLevel) {
+        this.name = name;
+        this.skillLevel = skillLevel;
     }
 
     public int getId() {

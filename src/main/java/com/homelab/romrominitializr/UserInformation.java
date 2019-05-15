@@ -4,14 +4,30 @@ package com.homelab.romrominitializr;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name="UserInfo")
+@Entity
+@Table(name="user_info")
 public class UserInformation {
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     private String name, surname, phoneNumber, emailAddress, city;
     private Date birthDate;
+
     @OneToOne(mappedBy = "userInformation")
     private User owner;
+
+    public UserInformation() {
+        super();
+    }
+
+    public UserInformation(String name, String surname, String phoneNumber, String emailAddress, String city, Date birthDate) {
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.city = city;
+        this.birthDate = birthDate;
+    }
 
     public int getId() {
         return id;
