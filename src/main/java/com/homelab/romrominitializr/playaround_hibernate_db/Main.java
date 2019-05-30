@@ -1,10 +1,11 @@
-package com.homelab.romrominitializr.tests;
+package com.homelab.romrominitializr.playaround_hibernate_db;
 
 import com.homelab.romrominitializr.Skill;
 import com.homelab.romrominitializr.SkillLevel;
 import com.homelab.romrominitializr.User;
 import com.homelab.romrominitializr.UserInformation;
 import org.hibernate.Session;
+import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -31,7 +32,7 @@ public class Main {
 
         HibernateUtil.getSessionFactory().close();
     }
-
+    @Bean
     private static void fillInDB(){
         Skill skill_java = new Skill("Java", SkillLevel.BEGINNER);
         Skill skill_python = new Skill("Python", SkillLevel.EXPERIENCED);
@@ -58,26 +59,28 @@ public class Main {
 
 
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
 
-        //saving skills
-        session.saveOrUpdate(skill_java);
-        session.saveOrUpdate(skill_python);
-        session.saveOrUpdate(skill_mysql);
-        session.saveOrUpdate(skill_linux);
-        session.saveOrUpdate(skill_networks);
-        session.saveOrUpdate(skill_communication);
-        //saving info
-        session.saveOrUpdate(ui_1);
-        session.saveOrUpdate(ui_2);
-        session.saveOrUpdate(ui_3);
-        //saving users
-        session.saveOrUpdate(user1);
-        session.saveOrUpdate(user2);
-        session.saveOrUpdate(user3);
 
-        session.getTransaction().commit();
-        HibernateUtil.shutdown();
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        session.beginTransaction();
+//
+//        //saving skills
+//        session.saveOrUpdate(skill_java);
+//        session.saveOrUpdate(skill_python);
+//        session.saveOrUpdate(skill_mysql);
+//        session.saveOrUpdate(skill_linux);
+//        session.saveOrUpdate(skill_networks);
+//        session.saveOrUpdate(skill_communication);
+//        //saving info
+//        session.saveOrUpdate(ui_1);
+//        session.saveOrUpdate(ui_2);
+//        session.saveOrUpdate(ui_3);
+//        //saving users
+//        session.saveOrUpdate(user1);
+//        session.saveOrUpdate(user2);
+//        session.saveOrUpdate(user3);
+//
+//        session.getTransaction().commit();
+//        HibernateUtil.shutdown();
     }
 }

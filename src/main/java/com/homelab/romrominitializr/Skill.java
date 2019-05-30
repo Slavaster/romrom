@@ -10,17 +10,14 @@ import java.util.Set;
 public class Skill {
 
     @Id
-    @GeneratedValue
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToMany
+    @ManyToMany(mappedBy = "skills", cascade = CascadeType.ALL)
     private Set<User> owners = new HashSet<>();
-
-    private String name;
     @Enumerated(EnumType.STRING)
     private SkillLevel skillLevel;
+    private String name;
 
-    @ManyToMany(mappedBy = "skills")
     public Set<User> getOwners() {
         return owners;
     }
@@ -63,4 +60,8 @@ public class Skill {
         this.skillLevel = skillLevel;
     }
 
+    @Override
+    public String toString() {
+        return name + " (" + skillLevel.toString() + ")";
+    }
 }

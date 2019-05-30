@@ -1,30 +1,29 @@
 package com.homelab.romrominitializr.controllers;
 
 import com.homelab.romrominitializr.repositories.UserRepo;
-import com.homelab.romrominitializr.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class LoginController {
 
-    @Autowired
-    UserRepo userRepo;
-
-    @GetMapping("login")
-    public String loginForm() {
-        return "login.html";
+    @RequestMapping("/")
+    public String home(){
+        return "views/user_profile.jsp";
     }
 
-    @PostMapping("login")
-    public String loginSubmit(User user){
 
-        if( userRepo.findByLoginAndPassword(user.getLogin(), user.getPassword()).size()>0) return "/pages/mailForm.jsp";
-
-        return "/pages/errorPage.jsp";
+    @RequestMapping("/login")
+    public String loginPage(){
+        return "views/login.jsp";
     }
+
+    @RequestMapping("/logout-success")
+    public String logoutPage(){
+        return "testAuth/logout.jsp";
+    }
+
 
 
 }

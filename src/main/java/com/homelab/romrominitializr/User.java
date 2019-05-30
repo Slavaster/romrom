@@ -9,22 +9,22 @@ import java.util.stream.Collectors;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_info")
+    private UserInformation userInformation;
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="users_skills", joinColumns={@JoinColumn(referencedColumnName="id")}
+            , inverseJoinColumns={@JoinColumn(referencedColumnName="id")})
+    private Set<Skill> skills = new HashSet<>();
+    private String role;
 
     private String login;
     private String password;
     private Date registrationDate;
 
-    @OneToOne
-    @JoinColumn(name="user_info")
-    private UserInformation userInformation;
 
-
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="users_skills", joinColumns={@JoinColumn(referencedColumnName="id")}
-            , inverseJoinColumns={@JoinColumn(referencedColumnName="id")})
-    private Set<Skill> skills = new HashSet<>();
 
     public User() {
         super();
@@ -96,5 +96,13 @@ public class User {
                 ", password='" + password + '\'' +
                 ", registrationDate=" + registrationDate +
                 '}';
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

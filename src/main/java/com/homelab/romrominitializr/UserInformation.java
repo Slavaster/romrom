@@ -8,7 +8,7 @@ import java.util.Date;
 @Table(name="user_info")
 public class UserInformation {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     private String name, surname, phoneNumber, emailAddress, city;
     private Date birthDate;
@@ -92,4 +92,7 @@ public class UserInformation {
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
+
+
+
 }

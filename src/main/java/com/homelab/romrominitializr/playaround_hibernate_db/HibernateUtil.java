@@ -1,4 +1,4 @@
-package com.homelab.romrominitializr.tests;
+package com.homelab.romrominitializr.playaround_hibernate_db;
 
 import com.homelab.romrominitializr.Skill;
 import com.homelab.romrominitializr.User;
